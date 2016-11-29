@@ -28,12 +28,16 @@ module Coupons
       @per_page = 50
       @pagination_adapter = if defined?(Kaminari)
                               :kaminari
-                            else
+                            elsif defined?(Paginate)
                               :paginate
+                            else
+                              :will_paginate
                             end
 
       @paginator =  if pagination_adapter == :kaminari
                       -> relation, page { relation.page(page).per(Coupons.configuration.per_page) }
+                    elsif pagination_adapter == :will_paginate
+                      -> relation, page { relation.paginate(page: page, per_page: Coupons.configuration.per_page)}
                     else
                       -> relation, page { relation.paginate(page: page, size: Coupons.configuration.per_page) }
                     end
