@@ -12,7 +12,8 @@ class Coupons::CouponsController < Coupons::ApplicationController
 
   def index
     paginator = Coupons.configuration.paginator
-    @coupons = Coupons::Collection.new(paginator.call(Coupon.order(created_at: :desc), params[:page]))
+    @page = params[:page]
+    @coupons = Coupons::Collection.new(paginator.call(Coupon.order(created_at: :desc), @page))
   end
 
   def new
