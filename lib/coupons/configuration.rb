@@ -23,7 +23,7 @@ module Coupons
 
     def initialize
       @resolvers = [Resolver.new]
-      @generator = Generatowr.new
+      @generator = Generator.new
       @finder = Finders::FirstAvailable
       @per_page = 50
       @pagination_adapter = if defined?(Kaminari)
